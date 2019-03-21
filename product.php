@@ -15,10 +15,13 @@ if (isset($_GET['product'])) {
 ?>
 
 <div class="product-card">
-    <a href="index.html">Вернуться на главную</a>
+    <a href="index.php">Вернуться на главную</a>
 
     <h2><? echo $product['rus_name'] ?> (<? echo $product['price'] ?> рублей)</h2>
     <div class="descr"><? echo $product['description'] ?></div>
     <img width="300" src="img/<? echo $product['img'] ?>" alt="<? echo $product['rus_name'] ?>">
-    <button type="submit">Добавить в корзину</button>
+    <form action="actions/add.php" method="POST">
+        <input type="hidden" name="id" value="<? echo $product['id'] ?>">
+        <input type="submit" value="Добавить в корзину">
+    </form>
 </div>

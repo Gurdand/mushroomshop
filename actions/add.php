@@ -36,4 +36,4 @@ if (isset($_POST['id'])) {
 
 header("Location: /index.php");
 
-//$_SERVER['RequestURI'];
+//$_SERVER['REQUEST_URI'];

@@ -7,8 +7,16 @@
     $categories = $connect->query("SELECT * FROM categories");
     $categories = $categories->fetchAll(PDO::FETCH_ASSOC);
 
+    if (!isset($_SESSION['totalQuantity'])) {
+        $_SESSION['totalQuantity'] = 0;
+    }
+
+    if (!isset($_SESSION['totalPrice'])) {
+        $_SESSION['totalPrice'] = 0;
+    }
+
     // echo "<pre>";
-    // var_dump($categories);
+    // var_dump($_SERVER['REQUEST_URI']);
     // echo "<pre>";
 
 ?>

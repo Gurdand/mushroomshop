@@ -6,6 +6,12 @@ if (isset($_GET['category'])) {
     $currentCategory = $_GET['category'];
     $products = $connect->query("SELECT * FROM products WHERE category='$currentCategory'");
     $products = $products->fetchAll(PDO::FETCH_ASSOC);
+
+    if (empty($products)) {
+        $products = $connect->query("SELECT * FROM products");
+        $products = $products->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
 } else {
 
     $products = $connect->query("SELECT * FROM products");
