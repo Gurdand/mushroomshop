@@ -1,5 +1,6 @@
 <?php
 
+
 require_once 'parts/header.php';
 
 if (isset($_GET['category'])) {
@@ -17,6 +18,7 @@ if (isset($_GET['category'])) {
     $products = $connect->query("SELECT * FROM products");
     $products = $products->fetchAll(PDO::FETCH_ASSOC);
 }
+
 ?>
 
 <div class="main">
@@ -27,10 +29,7 @@ if (isset($_GET['category'])) {
             <img src="img/<? echo $product['img'] ?>" alt="<? echo $product['rus_name'] ?>">
         </a>
         <div class="label"><? echo $product['rus_name'] ?> (<? echo $product['price'] ?> рублей)</div>
-        <form action="actions/add.php" method="POST">
-            <input type="hidden" name="id" value="<? echo $product['id'] ?>">
-            <input type="submit" value="Добавить в корзину">
-        </form>
+        <? require 'parts/add-form.php' ?>
     </div>
     <? } ?>
 

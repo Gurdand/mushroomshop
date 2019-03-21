@@ -1,16 +1,19 @@
 <?php
 
-require_once 'parts/header.php';
+require_once 'db/db.php';
 
 if (isset($_GET['product'])) {
     $currentProduct = $_GET['product'];
     $product = $connect->query("SELECT * FROM products WHERE title='$currentProduct'");
     $product = $product->fetch(PDO::FETCH_ASSOC);
+    
+    if (!$product) {
+        header('Location: /index.php');
+    }
 
-    // echo "<pre>";
-    // var_dump($product);
-    // echo "<pre>";
 }
+
+require_once 'parts/header.php';
 
 ?>
 
@@ -20,8 +23,5 @@ if (isset($_GET['product'])) {
     <h2><? echo $product['rus_name'] ?> (<? echo $product['price'] ?> рублей)</h2>
     <div class="descr"><? echo $product['description'] ?></div>
     <img width="300" src="img/<? echo $product['img'] ?>" alt="<? echo $product['rus_name'] ?>">
-    <form action="actions/add.php" method="POST">
-        <input type="hidden" name="id" value="<? echo $product['id'] ?>">
-        <input type="submit" value="Добавить в корзину">
-    </form>
+    <? require 'parts/add-form.php' ?>
 </div>

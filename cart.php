@@ -1,12 +1,18 @@
 <?php
 
-session_start();
-
 require_once 'parts/header.php';
 
-if (isset($_SESSION['cart'])){
+if (isset($_SESSION['order'])) { ?>
 
-foreach ($_SESSION['cart'] as $product) {
+    <p style="text-align: center;">Ваш заказ №<?php echo $_SESSION['order']['MAX(id)'] ?> принят.</p>
+    <a href="index.php" class="back">Вернуться на главную</a>
+
+    <?php
+}
+
+if (!count($_SESSION['cart']) == 0) {
+
+foreach ($_SESSION['cart'] as $key=>$product) {
 ?>
 
 <div class="cart">
@@ -16,10 +22,24 @@ foreach ($_SESSION['cart'] as $product) {
     <div class="cart-descr">
     <? echo $product['rus_name'] ?> в количестве <? echo $product['quantity'] ?> шт на сумму <? echo $product['quantity'] * $product['price'] ?> рублей
     </div>
-    <button type="submit">Удалить</button>
+    <form action="actions/delete.php" method="POST">
+        <input type="hidden" name="delete" value="<? echo $key ?>">
+        <input type="submit" value="Удалить">
+    </form>
 </div>
 
-<?php } } else {?>
+<?php } ?>
+
+<hr/>
+
+<form action="actions/mail.php" method="POST" class="order">
+    <input type="text" name="username" required placeholder="Ваше имя">
+    <input type="text" name="phone" required placeholder="Ваш телефон">
+    <input type="email" name="email" required placeholder="Ваше email">
+    <input type="submit" name="order" value="Отправить">
+</form>
+
+<?php } else {?>
     <p style="text-align: center;">Корзина пуста.</p>
 <?php } ?>
 
